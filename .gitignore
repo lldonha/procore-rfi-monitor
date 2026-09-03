@@ -1,0 +1,11 @@
+.env
+.env.local
+*.key
+
+# IDs do sandbox nao vao para o publico
+sandbox/ambiente-privado.md
+
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store

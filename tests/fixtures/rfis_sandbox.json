@@ -1,0 +1,530 @@
+[
+{
+"id": 111511,
+"assignee": {
+"id": 100298,
+"locale": null,
+"login": "implementation+sub@procore.com",
+"name": "Test Subcontractor (Subcontracting TEST Company)"
+},
+"assignees": [
+{
+"id": 100298,
+"locale": null,
+"login": "implementation+sub@procore.com",
+"name": "Test Subcontractor (Subcontracting TEST Company)",
+"response_required": false
+}
+],
+"ball_in_court": null,
+"ball_in_courts": [],
+"connect_export_origin": null,
+"cost_code": null,
+"cost_impact": {
+"status": null,
+"value": null
+},
+"created_at": "2026-09-02T20:04:57Z",
+"created_by": {
+"id": 1,
+"login": "demo@example.com",
+"name": "Demo User"
+},
+"current_revision": true,
+"custom_fields": {},
+"due_date": "2026-08-28",
+"full_number": "6",
+"has_revisions": false,
+"initiated_at": "2026-09-02T20:04:57Z",
+"link": "https://sandbox.procore.com/000000/project/rfi/show/111511",
+"location": null,
+"location_id": null,
+"number": "6",
+"prefix": null,
+"priority": {
+"name": null,
+"value": null
+},
+"private": false,
+"project_stage": null,
+"proposed_solution": null,
+"questions": [
+{
+"id": 111510,
+"body": "O memorial de cálculo indica bitola de 25mm² para os condutores do QF-02, enquanto a prancha elétrica indica 35mm². Qual bitola deve ser considerada?",
+"errors": {}
+}
+],
+"received_from": null,
+"reference": "Memorial de cálculo e prancha elétrica divergem quanto à bitola dos condutores do QF-02",
+"responsible_contractor": null,
+"revision": "0",
+"rfi_manager": {
+"id": 99519,
+"login": "implementation+demo@procore.com",
+"name": "API Support"
+},
+"schedule_impact": {
+"status": null,
+"value": null
+},
+"source_rfi_header_id": 111511,
+"specification_section_id": null,
+"status": "closed",
+"sub_job": null,
+"subject": "Confirmação de bitola do cabeamento elétrico do quadro de força QF-02",
+"time_resolved": "2026-09-02T20:05:29Z",
+"translated_status": "Closed",
+"updated_at": "2026-09-02T20:05:29Z"
+},
+{
+"id": 111496,
+"assignee": {
+"id": 100299,
+"locale": null,
+"login": "implementation+arch@procore.com",
+"name": "Test Architect (Architect TEST Company)"
+},
+"assignees": [
+{
+"id": 100299,
+"locale": null,
+"login": "implementation+arch@procore.com",
+"name": "Test Architect (Architect TEST Company)",
+"response_required": false
+}
+],
+"ball_in_court": {
+"id": 100299,
+"locale": null,
+"login": "implementation+arch@procore.com",
+"name": "Test Architect (Architect TEST Company)"
+},
+"ball_in_courts": [
+{
+"id": 100299,
+"locale": null,
+"login": "implementation+arch@procore.com",
+"name": "Test Architect (Architect TEST Company)"
+}
+],
+"connect_export_origin": null,
+"cost_code": null,
+"cost_impact": {
+"status": null,
+"value": null
+},
+"created_at": "2026-09-02T20:04:44Z",
+"created_by": {
+"id": 1,
+"login": "demo@example.com",
+"name": "Demo User"
+},
+"current_revision": true,
+"custom_fields": {},
+"due_date": "2026-09-12",
+"full_number": "5",
+"has_revisions": false,
+"initiated_at": "2026-09-02T20:04:44Z",
+"link": "https://sandbox.procore.com/000000/project/rfi/show/111496",
+"location": null,
+"location_id": null,
+"number": "5",
+"prefix": null,
+"priority": {
+"name": null,
+"value": null
+},
+"private": false,
+"project_stage": null,
+"proposed_solution": null,
+"questions": [
+{
+"id": 111495,
+"body": "O projeto de fachadas não apresenta detalhe construtivo para a fixação da fachada ventilada no encontro com a platibanda. Poderia fornecer o detalhamento?",
+"errors": {}
+}
+],
+"received_from": null,
+"reference": "Projeto de fachadas não apresenta detalhe construtivo para o encontro com a platibanda",
+"responsible_contractor": null,
+"revision": "0",
+"rfi_manager": {
+"id": 99519,
+"login": "implementation+demo@procore.com",
+"name": "API Support"
+},
+"schedule_impact": {
+"status": null,
+"value": null
+},
+"source_rfi_header_id": 111496,
+"specification_section_id": null,
+"status": "open",
+"sub_job": null,
+"subject": "Necessidade de detalhamento da fixação da fachada ventilada no encontro com a platibanda",
+"time_resolved": null,
+"translated_status": "Open",
+"updated_at": "2026-09-02T20:04:44Z"
+},
+{
+"id": 111495,
+"assignee": {
+"id": 99519,
+"locale": null,
+"login": "implementation+demo@procore.com",
+"name": "API Support (Procore (Test Companies))"
+},
+"assignees": [
+{
+"id": 99519,
+"locale": null,
+"login": "implementation+demo@procore.com",
+"name": "API Support (Procore (Test Companies))",
+"response_required": false
+}
+],
+"ball_in_court": {
+"id": 99519,
+"locale": null,
+"login": "implementation+demo@procore.com",
+"name": "API Support (Procore (Test Companies))"
+},
+"ball_in_courts": [
+{
+"id": 99519,
+"locale": null,
+"login": "implementation+demo@procore.com",
+"name": "API Support (Procore (Test Companies))"
+}
+],
+"connect_export_origin": null,
+"cost_code": null,
+"cost_impact": {
+"status": null,
+"value": null
+},
+"created_at": "2026-09-02T20:04:32Z",
+"created_by": {
+"id": 1,
+"login": "demo@example.com",
+"name": "Demo User"
+},
+"current_revision": true,
+"custom_fields": {},
+"due_date": "2026-09-04",
+"full_number": "4",
+"has_revisions": false,
+"initiated_at": "2026-09-02T20:04:32Z",
+"link": "https://sandbox.procore.com/000000/project/rfi/show/111495",
+"location": null,
+"location_id": null,
+"number": "4",
+"prefix": null,
+"priority": {
+"name": null,
+"value": null
+},
+"private": false,
+"project_stage": null,
+"proposed_solution": null,
+"questions": [
+{
+"id": 111494,
+"body": "A prumada de água fria cruza com o eletroduto de alimentação do QDL-03 no forro do 3º pavimento. Como deve ser resolvida essa interferência?",
+"errors": {}
+}
+],
+"received_from": null,
+"reference": "Cruzamento da prumada de água fria com o eletroduto de alimentação do QDL-03",
+"responsible_contractor": null,
+"revision": "0",
+"rfi_manager": {
+"id": 99519,
+"login": "implementation+demo@procore.com",
+"name": "API Support"
+},
+"schedule_impact": {
+"status": null,
+"value": null
+},
+"source_rfi_header_id": 111495,
+"specification_section_id": null,
+"status": "open",
+"sub_job": null,
+"subject": "Interferência entre tubulação hidráulica e eletrodutos no forro do 3º pavimento",
+"time_resolved": null,
+"translated_status": "Open",
+"updated_at": "2026-09-02T20:04:32Z"
+},
+{
+"id": 111494,
+"assignee": {
+"id": 100298,
+"locale": null,
+"login": "implementation+sub@procore.com",
+"name": "Test Subcontractor (Subcontracting TEST Company)"
+},
+"assignees": [
+{
+"id": 100298,
+"locale": null,
+"login": "implementation+sub@procore.com",
+"name": "Test Subcontractor (Subcontracting TEST Company)",
+"response_required": false
+}
+],
+"ball_in_court": {
+"id": 100298,
+"locale": null,
+"login": "implementation+sub@procore.com",
+"name": "Test Subcontractor (Subcontracting TEST Company)"
+},
+"ball_in_courts": [
+{
+"id": 100298,
+"locale": null,
+"login": "implementation+sub@procore.com",
+"name": "Test Subcontractor (Subcontracting TEST Company)"
+}
+],
+"connect_export_origin": null,
+"cost_code": null,
+"cost_impact": {
+"status": null,
+"value": null
+},
+"created_at": "2026-09-02T20:04:19Z",
+"created_by": {
+"id": 1,
+"login": "demo@example.com",
+"name": "Demo User"
+},
+"current_revision": true,
+"custom_fields": {},
+"due_date": "2026-09-02",
+"full_number": "3",
+"has_revisions": false,
+"initiated_at": "2026-09-02T20:04:19Z",
+"link": "https://sandbox.procore.com/000000/project/rfi/show/111494",
+"location": null,
+"location_id": null,
+"number": "3",
+"prefix": null,
+"priority": {
+"name": null,
+"value": null
+},
+"private": false,
+"project_stage": null,
+"proposed_solution": null,
+"questions": [
+{
+"id": 111493,
+"body": "A área do hall de entrada do pavimento térreo não possui indicação de revestimento de piso no memorial descritivo. Qual especificação deve ser aplicada?",
+"errors": {}
+}
+],
+"received_from": null,
+"reference": "Área do hall de entrada no pavimento térreo está sem indicação de revestimento no memorial",
+"responsible_contractor": null,
+"revision": "0",
+"rfi_manager": {
+"id": 99519,
+"login": "implementation+demo@procore.com",
+"name": "API Support"
+},
+"schedule_impact": {
+"status": null,
+"value": null
+},
+"source_rfi_header_id": 111494,
+"specification_section_id": null,
+"status": "open",
+"sub_job": null,
+"subject": "Especificação de acabamento de piso não localizada no memorial descritivo",
+"time_resolved": null,
+"translated_status": "Open",
+"updated_at": "2026-09-02T20:04:19Z"
+},
+{
+"id": 111493,
+"assignee": {
+"id": 100299,
+"locale": null,
+"login": "implementation+arch@procore.com",
+"name": "Test Architect (Architect TEST Company)"
+},
+"assignees": [
+{
+"id": 100299,
+"locale": null,
+"login": "implementation+arch@procore.com",
+"name": "Test Architect (Architect TEST Company)",
+"response_required": false
+}
+],
+"ball_in_court": {
+"id": 100299,
+"locale": null,
+"login": "implementation+arch@procore.com",
+"name": "Test Architect (Architect TEST Company)"
+},
+"ball_in_courts": [
+{
+"id": 100299,
+"locale": null,
+"login": "implementation+arch@procore.com",
+"name": "Test Architect (Architect TEST Company)"
+}
+],
+"connect_export_origin": null,
+"cost_code": null,
+"cost_impact": {
+"status": null,
+"value": null
+},
+"created_at": "2026-09-02T20:04:07Z",
+"created_by": {
+"id": 1,
+"login": "demo@example.com",
+"name": "Demo User"
+},
+"current_revision": true,
+"custom_fields": {},
+"due_date": "2026-08-30",
+"full_number": "2",
+"has_revisions": false,
+"initiated_at": "2026-09-02T20:04:07Z",
+"link": "https://sandbox.procore.com/000000/project/rfi/show/111493",
+"location": null,
+"location_id": null,
+"number": "2",
+"prefix": null,
+"priority": {
+"name": null,
+"value": null
+},
+"private": false,
+"project_stage": null,
+"proposed_solution": null,
+"questions": [
+{
+"id": 111492,
+"body": "Viga aparente no forro conflita com a posição de pilar indicada no projeto arquitetônico. Qual documento prevalece?",
+"errors": {}
+}
+],
+"received_from": null,
+"reference": "Viga aparente no forro conflita com a posição de pilar indicada no projeto arquitetônico",
+"responsible_contractor": null,
+"revision": "0",
+"rfi_manager": {
+"id": 99519,
+"login": "implementation+demo@procore.com",
+"name": "API Support"
+},
+"schedule_impact": {
+"status": null,
+"value": null
+},
+"source_rfi_header_id": 111493,
+"specification_section_id": null,
+"status": "open",
+"sub_job": null,
+"subject": "Divergência entre projeto estrutural e arquitetônico no eixo B-C, pavimento 2",
+"time_resolved": null,
+"translated_status": "Open",
+"updated_at": "2026-09-02T20:08:58Z"
+},
+{
+"id": 111492,
+"assignee": {
+"id": 99519,
+"locale": null,
+"login": "implementation+demo@procore.com",
+"name": "API Support (Procore (Test Companies))"
+},
+"assignees": [
+{
+"id": 99519,
+"locale": null,
+"login": "implementation+demo@procore.com",
+"name": "API Support (Procore (Test Companies))",
+"response_required": false
+}
+],
+"ball_in_court": {
+"id": 99519,
+"locale": null,
+"login": "implementation+demo@procore.com",
+"name": "API Support (Procore (Test Companies))"
+},
+"ball_in_courts": [
+{
+"id": 99519,
+"locale": null,
+"login": "implementation+demo@procore.com",
+"name": "API Support (Procore (Test Companies))"
+}
+],
+"connect_export_origin": null,
+"cost_code": null,
+"cost_impact": {
+"status": null,
+"value": null
+},
+"created_at": "2026-09-02T19:56:18Z",
+"created_by": {
+"id": 1,
+"login": "demo@example.com",
+"name": "Demo User"
+},
+"current_revision": true,
+"custom_fields": {},
+"due_date": "2026-09-15",
+"full_number": "1",
+"has_revisions": false,
+"initiated_at": "2026-09-02T19:56:18Z",
+"link": "https://sandbox.procore.com/000000/project/rfi/show/111492",
+"location": null,
+"location_id": null,
+"number": "1",
+"prefix": null,
+"priority": {
+"name": null,
+"value": null
+},
+"private": false,
+"project_stage": null,
+"proposed_solution": null,
+"questions": [
+{
+"id": 111491,
+"body": "Qual a especificação correta para este item de teste?",
+"errors": {}
+}
+],
+"received_from": null,
+"reference": "Criado para demonstrar a estrutura da API",
+"responsible_contractor": null,
+"revision": "0",
+"rfi_manager": {
+"id": 99519,
+"login": "implementation+demo@procore.com",
+"name": "API Support"
+},
+"schedule_impact": {
+"status": null,
+"value": null
+},
+"source_rfi_header_id": 111492,
+"specification_section_id": null,
+"status": "open",
+"sub_job": null,
+"subject": "RFI de teste via API (Sandbox)",
+"time_resolved": null,
+"translated_status": "Open",
+"updated_at": "2026-09-02T19:56:18Z"
+}
+]
