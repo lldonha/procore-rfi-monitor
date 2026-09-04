@@ -48,9 +48,8 @@ def make_rfi(
         "time_resolved": time_resolved,
         "ball_in_court": ball_in_court,
         "rfi_manager": rfi_manager,
-        "questions": [
-            {"body": "q", "answers": ["a"] if answered else []}
-        ],
+        "questions": [{"body": "q"}],
+        "replies": [{"official": True}] if answered else [],
     }
 
 
@@ -84,9 +83,17 @@ class TestClassifyState:
         assert classify_state(rfi) == RfiState.CLOSED
 
     def test_real_open_rfis_from_sandbox_are_awaiting_reply(self):
-        for number in ("1", "2", "3", "4", "5"):
+        for number in ("1", "3", "4", "5"):
             rfi = rfi_by_number(SANDBOX_RFIS, number)
             assert classify_state(rfi) == RfiState.AWAITING_REPLY
+
+    def test_real_rfi_with_official_reply_from_sandbox_is_awaiting_acceptance(self):
+        # RFI #2 has a real official reply recorded via GET /rfis/{id}/replies
+        # (confirmed 2026-09-04) but `questions[].answers` stays empty in the
+        # `GET /rfis` list payload -- this is the case that exposed the old
+        # `_has_answer()` bug.
+        rfi = rfi_by_number(SANDBOX_RFIS, "2")
+        assert classify_state(rfi) == RfiState.AWAITING_ACCEPTANCE
 
 
 # ---------------------------------------------------------------------------
@@ -150,6 +157,37 @@ class TestClassifyRfi:
         # after close) -- must not raise even on an overdue/open RFI.
         rfi = make_rfi(due_date="2026-09-01", ball_in_court=None)
         assert classify_rfi(rfi, TODAY) is None
+
+    def test_ball_in_court_role_absent_falls_back_to_ball_in_court(self):
+        # Observed case in sandbox testing -- the API never populated this
+        # field there, even though it's documented. ball_in_court alone
+        # must still resolve the responsible party.
+        rfi = make_rfi(due_date="2026-09-01", ball_in_court=ASSIGNEE)
+        result = classify_rfi(rfi, TODAY)
+        assert result.responsible_id == ASSIGNEE["id"]
+
+    def test_ball_in_court_role_assignees_uses_first_assignee(self):
+        rfi = make_rfi(due_date="2026-09-01", ball_in_court=MANAGER)
+        rfi["ball_in_court_role"] = "assignees"
+        rfi["assignees"] = [ASSIGNEE]
+        result = classify_rfi(rfi, TODAY)
+        assert result.responsible_id == ASSIGNEE["id"]
+
+    def test_ball_in_court_role_rfi_manager_uses_rfi_manager(self):
+        rfi = make_rfi(
+            due_date="2026-09-01", ball_in_court=ASSIGNEE, rfi_manager=MANAGER
+        )
+        rfi["ball_in_court_role"] = "rfi_manager"
+        result = classify_rfi(rfi, TODAY)
+        assert result.responsible_id == MANAGER["id"]
+
+    def test_ball_in_court_role_creator_uses_creator(self):
+        creator = {"id": 77001, "name": "Test Creator"}
+        rfi = make_rfi(due_date="2026-09-01", ball_in_court=ASSIGNEE)
+        rfi["ball_in_court_role"] = "creator"
+        rfi["creator"] = creator
+        result = classify_rfi(rfi, TODAY)
+        assert result.responsible_id == creator["id"]
 
 
 # ---------------------------------------------------------------------------
@@ -229,13 +267,37 @@ class TestGroupingAndNotifications:
         assert "awaiting your acceptance" in message
 
     def test_real_sandbox_fixture_produces_expected_groups(self):
-        # As of the 2026-09-02 export (see ambiente.md): #1 overdue/open,
-        # #2 overdue/open, #3 due today, #4 due in 1 day, #5 due in 9 days
-        # (dropped, > 7 days out), #6 closed (dropped). All open ones have
-        # no answers yet -> awaiting_reply, responsible = ball_in_court.
+        # As of the 2026-09-04 export (see docs/api-notes.md): #1 due in 12
+        # days (dropped, > 7 days out), #2 overdue with a real official
+        # reply -> awaiting_acceptance, #3 overdue/open, #4 due today, #5
+        # due in 9 days (dropped), #6 closed (dropped).
         notifications = build_notifications(SANDBOX_RFIS, TODAY)
-        # RFI #5 is due 2026-09-12 (9 days out from 2026-09-03) -> fine, dropped.
         all_numbers = "".join(notifications.values())
+        assert "#1" not in all_numbers
         assert "#5" not in all_numbers
         assert "#6" not in all_numbers
-        assert notifications  # #1-4 should produce at least one notification
+        assert "#2" in all_numbers
+        assert "awaiting your acceptance" in all_numbers
+        assert notifications
+
+    def test_silent_when_everything_is_fine(self):
+        # Same shape as the real sandbox scenario (open RFIs with a mix of
+        # states), but every due_date is more than 7 days out -- nothing
+        # overdue, critical or needing attention. Confirms silence is the
+        # actual behavior, not an assumption: a run with nothing urgent
+        # must send zero messages, not an empty-looking one.
+        rfis = [
+            make_rfi(
+                rfi_id=1, number="1", due_date="2026-09-20", ball_in_court=ASSIGNEE
+            ),
+            make_rfi(
+                rfi_id=2,
+                number="2",
+                due_date="2026-09-25",
+                ball_in_court=ASSIGNEE,
+                rfi_manager=MANAGER,
+                answered=True,
+            ),
+            make_rfi(rfi_id=3, number="3", due_date="2026-08-01", status="closed"),
+        ]
+        assert build_notifications(rfis, TODAY) == {}

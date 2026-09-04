@@ -88,10 +88,16 @@ Observações práticas:
 - `ball_in_court_role` (não visto nos dados de teste, mas documentado pela
   API) indica se quem está com a bola é `assignees`, `rfi_manager` ou
   `creator` — tratar os três casos, não assumir sempre `assignees`.
-- No sandbox testado, os itens de `questions[]` sem resposta não trazem a
-  chave `answers` populada. O monitor trata "sem resposta" como
-  `questions[].answers` vazio ou ausente — não assumir que a chave sempre
-  existe.
+- **`questions[].answers` nunca vem populado por `GET /rfis`, mesmo quando
+  existe uma resposta oficial real** (confirmado 2026-09-04 contra um RFI
+  do sandbox com resposta oficial gravada — `questions[].answers` continua
+  `[]`/ausente). O monitor **não pode** detectar "tem resposta" por esse
+  campo. O sinal real é um endpoint separado:
+  `GET /rest/v1.0/projects/{project_id}/rfis/{rfi_id}/replies`, que retorna
+  uma lista de replies com `official: true` na que foi marcada como
+  resposta oficial. O workflow precisa buscar replies por RFI (uma chamada
+  extra por RFI aberto) e anexar o resultado como `rfi["replies"]` antes de
+  chamar `classify_state()` — ver `src/monitor.py::_has_answer()`.
 - `created_by` é o usuário por trás do token OAuth, não o solicitante do
   RFI necessariamente.
 
@@ -132,6 +138,16 @@ POST /rest/v1.0/rfis/{id}/replies?project_id={id}
 
 Grava a resposta mas **não** fecha o RFI (`status` continua `open`,
 `time_resolved` continua `null`).
+
+```
+GET /rest/v1.0/projects/{project_id}/rfis/{rfi_id}/replies
+```
+
+Único jeito confiável de saber se um RFI tem resposta oficial (ver nota
+acima sobre `questions[].answers`). Retorna uma lista; cada item tem
+`id`, `answer_date`, `plain_text_body`, `created_by`, `official` (bool).
+Lista vazia = sem replies ainda. `Procore-Company-Id` continua obrigatório
+no header.
 
 ```
 PATCH /rest/v1.0/rfis/{id}?project_id={id}

@@ -50,8 +50,13 @@ class ClassifiedRfi:
 
 
 def _has_answer(rfi: dict) -> bool:
-    for question in rfi.get("questions") or []:
-        if question.get("answers"):
+    # `questions[].answers` is never populated by `GET /rfis` in the sandbox,
+    # even when an official reply exists (confirmed against a real RFI with
+    # a recorded official response -- see docs/api-notes.md). The real
+    # signal is a reply from `GET /rfis/{id}/replies` marked `official`,
+    # attached to the RFI dict as `replies` before classification.
+    for reply in rfi.get("replies") or []:
+        if reply.get("official"):
             return True
     return False
 
@@ -75,11 +80,33 @@ def classify_urgency(due_date: date, today: date) -> Urgency:
     return Urgency.FINE
 
 
+def _ball_in_court_user(rfi: dict) -> dict | None:
+    # `ball_in_court_role` says whether the ball actually sits with
+    # assignees, the rfi_manager, or the creator -- it was never populated
+    # in sandbox testing (Procore's own docs list it, our sandbox just
+    # never returned it), so `ball_in_court` alone worked there. Handling
+    # the three documented values here means a production project where
+    # Procore does populate it won't silently point at the wrong person.
+    role = rfi.get("ball_in_court_role")
+    if role == "rfi_manager":
+        return rfi.get("rfi_manager")
+    if role == "creator":
+        return rfi.get("creator")
+    if role == "assignees":
+        assignees = rfi.get("assignees") or []
+        return assignees[0] if assignees else None
+    # role absent (observed case) -- ball_in_court itself is the best signal.
+    return rfi.get("ball_in_court")
+
+
 def _responsible_for(rfi: dict, state: RfiState) -> dict | None:
     if state == RfiState.AWAITING_ACCEPTANCE:
+        # Procore does not move ball_in_court after an official reply (see
+        # README) -- the person who must act next is always rfi_manager,
+        # not whatever ball_in_court/ball_in_court_role still points at.
         return rfi.get("rfi_manager")
     if state == RfiState.AWAITING_REPLY:
-        return rfi.get("ball_in_court")
+        return _ball_in_court_user(rfi)
     return None
 
 

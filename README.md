@@ -19,7 +19,7 @@ That fix is wrong, and it fails silently.
 
 ---
 
-## Three things the Procore API does that the docs don't mention
+## Four things the Procore API does that the docs don't mention
 
 These cost hours to discover. Written down so you don't have to.
 
@@ -76,14 +76,31 @@ A monitor that trusts that field will:
 On close, the field empties to `null` — so it's reliable at the start and
 at the end, and blind in the middle.
 
+### 4. The list endpoint never tells you a reply exists
+
+`GET /rfis` returns each RFI's `questions[]`, and the obvious place to look
+for a reply is `questions[].answers`. It's always empty — confirmed
+against a real RFI with a genuine official reply on record, not just in
+sandbox theory.
+
+The reply lives behind its own endpoint:
+
+```
+GET /rest/v1.0/projects/{project_id}/rfis/{rfi_id}/replies
+→ [{ "official": true, "plain_text_body": "...", ... }]
+```
+
+One extra call per open RFI, but it's the only way to know "awaiting
+reply" just became "awaiting acceptance."
+
 ---
 
 ## The fix: three states, not two
 
 | State | Condition | Who has to act |
 |---|---|---|
-| Awaiting reply | `open`, `questions[].answers` empty | `ball_in_court` |
-| **Awaiting acceptance** | `open`, has answers | **`rfi_manager`** |
+| Awaiting reply | `open`, no official reply on `GET .../replies` | `ball_in_court` |
+| **Awaiting acceptance** | `open`, an `official: true` reply exists | **`rfi_manager`** |
 | Closed | `closed` or `time_resolved` set | nobody |
 
 Urgency from `due_date`: overdue (negative), critical (0–2 days),
@@ -116,7 +133,7 @@ accepted            true closes the RFI
 ball_in_court       NOT reliable after a reply
 ball_in_court_role  assignees | rfi_manager | creator — handle all three
 rfi_manager         who accepts
-questions[].answers empty = no reply yet
+GET .../replies     official:true = the real "has a reply" signal
 ```
 
 ### Fields present in responses but absent from the documented schema
